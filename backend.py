@@ -24,7 +24,7 @@ def maybe_sleep_and_close(seconds):
             except:
                 pass
 
-# Stats should include all of the key quantities used for grading.
+
 # This backend file deals with all data loading / environment construction, so
 # once a function get_data_and_monitor_* returns the dataset might have been
 # thrown away even though the model still exists
