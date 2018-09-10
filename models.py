@@ -32,15 +32,13 @@ class Model(object):
 class RegressionModel(Model):
     """
     A neural network model for approximating a function that maps from real
-    numbers to real numbers. The network should be sufficiently large to be able
-    to approximate sin(x) on the interval [-2pi, 2pi] to reasonable precision.
+    numbers to real numbers. 
     """
     def __init__(self):
         Model.__init__(self)
         self.get_data_and_monitor = backend.get_data_and_monitor_regression
 
-        # Remember to set self.learning_rate!
-        # You may use any learning rate that works well for your architecture
+        
         self.learning_rate=.02
         self.hidden_size=200
         self.batch_size=200
@@ -66,7 +64,7 @@ class RegressionModel(Model):
 
         Note: DO NOT call backprop() or step() inside this method!
         """
-        "*** YOUR CODE HERE ***"
+        
 
         if y is not None:
             # At training time, the correct output `y` is known.
@@ -95,12 +93,10 @@ class RegressionModel(Model):
 
 class OddRegressionModel(Model):
     """
-    A neural network model for approximating a function that maps from real
+    A neural network model for approximating an odd function that maps from real
     numbers to real numbers.
 
-    Unlike RegressionModel, the OddRegressionModel must be structurally
-    constrained to represent an odd function, i.e. it must always satisfy the
-    property f(x) = -f(-x) at all points during training.
+    
     """
     def __init__(self):
         Model.__init__(self)
@@ -251,9 +247,9 @@ class DigitClassificationModel(Model):
         array. Each row in the array is a one-hot vector encoding the correct
         class.
 
-        Your model should predict a (batch_size x 10) numpy array of scores,
+        model should predict a (batch_size x 10) numpy array of scores,
         where higher scores correspond to greater probability of the image
-        belonging to a particular class. You should use `nn.SoftmaxLoss` as your
+        belonging to a particular class.  uses `nn.SoftmaxLoss` as
         training loss.
 
         Inputs:
@@ -296,8 +292,7 @@ class DeepQModel(Model):
     A model that uses a Deep Q-value Network (DQN) to approximate Q(s,a) as part
     of reinforcement learning.
 
-    (We recommend that you implement the RegressionModel before working on this
-    part of the project.)
+    
     """
     def __init__(self):
         Model.__init__(self)
@@ -337,7 +332,7 @@ class DeepQModel(Model):
             (if Q_target is None) A (batch_size x 2) numpy array of Q-value
                 scores, for the two actions
         """
-        "*** YOUR CODE HERE ***"
+        
         graph = nn.Graph([self.W1, self.W2, self.b1, self.b2])
         input_x = nn.Input(graph, states)
         xdotWpos = nn.MatrixMultiply(graph, input_x, self.W1)
@@ -354,7 +349,7 @@ class DeepQModel(Model):
             loss = nn.SquareLoss(graph, second_layerplusbpos, input_y)
             return graph
         else:
-            "*** YOUR CODE HERE ***"
+            
             return graph.get_output(second_layerplusbpos)
 
     def get_action(self, state, eps):
@@ -378,9 +373,7 @@ class LanguageIDModel(Model):
     """
     A model for language identification at a single-word granularity.
 
-    (See RegressionModel for more information about the APIs of different
-    methods here. We recommend that you implement the RegressionModel before
-    working on this part of the project.)
+    
     """
     def __init__(self):
         Model.__init__(self)
@@ -389,13 +382,12 @@ class LanguageIDModel(Model):
         # Our dataset contains words from five different languages, and the
         # combined alphabets of the five languages contain a total of 47 unique
         # characters.
-        # You can refer to self.num_chars or len(self.languages) in your code
+        
         self.num_chars = 47
         self.languages = ["English", "Spanish", "Finnish", "Dutch", "Polish"]
         self.hidden_size=2100
         self.learning_rate=.01
-        # Remember to set self.learning_rate!
-        # You may use any learning rate that works well for your architecture
+       
 
         self.W1, self.W2, self.b1, self.b2,self.W3 = nn.Variable(self.num_chars, self.hidden_size), nn.Variable(self.hidden_size,47), nn.Variable(self.hidden_size), nn.Variable(47),nn.Variable(47,5)
     def run(self, xs, y=None):
@@ -417,12 +409,12 @@ class LanguageIDModel(Model):
         array. Each row in the array is a one-hot vector encoding the correct
         class.
 
-        Your model should use a Recurrent Neural Network to summarize the list
+        model should use a Recurrent Neural Network to summarize the list
         `xs` into a single node that represents a (batch_size x hidden_size)
         array, for your choice of hidden_size. It should then calculate a
         (batch_size x 5) numpy array of scores, where higher scores correspond
         to greater probability of the word originating from a particular
-        language. You should use `nn.SoftmaxLoss` as your training loss.
+        language. uses `nn.SoftmaxLoss` as your training loss.
 
         Inputs:
             xs: a list with L elements (one per character), where each element
@@ -433,7 +425,7 @@ class LanguageIDModel(Model):
                 the loss
             (if y is None) A (batch_size x 5) numpy array of scores (aka logits)
 
-        Hint: you may use the batch_size variable in your code
+        
         """
         batch_size = xs[0].shape[0]
         def nueral_net(graph,pass_in):
@@ -463,7 +455,7 @@ class LanguageIDModel(Model):
             graph,h=nueral_net(graph,pass_in)
 
         h = nn.MatrixMultiply(graph, h, self.W3)
-        "*** YOUR CODE HERE ***"
+        
 
         if y is not None:
 
